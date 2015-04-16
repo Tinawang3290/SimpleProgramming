@@ -1,0 +1,42 @@
+#=====================
+#Problem: Divide till 5 decimal places
+#Input: M1 / M2
+#Output: M10.M11 M12 ... M15
+#=====================
+
+# Input
+1: SET 151 M1
+2: SET 13 M2
+
+# Constants
+3: SET 10 M3
+4: SET 0 M4
+5: SET 1 M5
+
+# Location of next decimal
+6: SET 9 M6
+7: SET 16 M7
+
+## Looping
+# Increment
+8: ADD M6 M5 M6
+# Termination condition
+9: IFE M6 M7 L100
+
+# If dividend is greater than divisor, then integer divide, else put 0 as next decimal
+10: IFG M1 M2 L20
+
+# Next decimal is 0
+11: PUT M4 M6
+12: MUL M1 M3 M1
+13: GOT L8
+
+# Next decimal needs to be found by division
+20: DIV M1 M2 M8
+21: PUT M8 M6
+
+# Next dividend is remainder * 10
+25: MUL M8 M2 M9
+26: SUB M1 M9 M1
+27: MUL M1 M3 M1
+28: GOT L8
