@@ -1,21 +1,5 @@
-from enum import Enum, unique
+import math
 
-@unique
-class Code(Enum):
-	ADD = 1
-	SUB = 2
-	MUL = 3
-	DIV = 4
-	GOT = 5
-	IFE = 6
-	IFN = 7
-	IFG = 8
-	IFL = 9
-	PUT = 10
-	GET = 11
-	COP = 12
-	SET = 13
-	
 class Instruction:
 	def __init__(self, machine, thisline, code, mlocs, lnums, consts):
 		self.machine = machine
@@ -26,19 +10,19 @@ class Instruction:
 		self.consts = consts
 		
 		self.instr_map = { 
-			Code.ADD : self._add,
-			Code.SUB : self._sub,
-			Code.MUL : self._mul,
-			Code.DIV : self._div,
-			Code.GOT : self._got,
-			Code.IFE : self._ife,
-			Code.IFN : self._ifn,
-			Code.IFG : self._ifg,
-			Code.IFL : self._ifl,
-			Code.PUT : self._put,
-			Code.GET : self._get,
-			Code.COP : self._cop,
-			Code.SET : self._set,
+			'ADD' : self._add,
+			'SUB' : self._sub,
+			'MUL' : self._mul,
+			'DIV' : self._div,
+			'GOT' : self._got,
+			'IFE' : self._ife,
+			'IFN' : self._ifn,
+			'IFG' : self._ifg,
+			'IFL' : self._ifl,
+			'PUT' : self._put,
+			'GET' : self._get,
+			'COP' : self._cop,
+			'SET' : self._set,
 		}
 			
 	def execute(self):
@@ -54,7 +38,7 @@ class Instruction:
 		self.machine.mmap[self.mlocs[2]] = self.machine.mmap[self.mlocs[0]] * self.machine.mmap[self.mlocs[1]]
 
 	def _div(self):
-		self.machine.mmap[self.mlocs[2]] = self.machine.mmap[self.mlocs[0]] / self.machine.mmap[self.mlocs[1]]
+		self.machine.mmap[self.mlocs[2]] = math.floor(self.machine.mmap[self.mlocs[0]] / self.machine.mmap[self.mlocs[1]])
 
 	def _got(self):
 		self.machine.pc = self.lnums[0]
